@@ -1,8 +1,11 @@
 import React from "react";
 import { Input } from "../ui/input";
 import Image from "next/image";
+import { useAppContext } from "@/context/AppContext";
 
-export default function StepTwo() {
+export default function BasicInfo() {
+  const { formData, handleProfileInfoChange } = useAppContext() || {};
+
   return (
     <div>
       <div className="mt-4 w-[90vw] space-y-4">
@@ -44,10 +47,34 @@ export default function StepTwo() {
         Or enter manually{" "}
       </p>{" "}
       <div className="mt-4 space-y-4">
-        <Input placeholder="Full name" className="rounded-xl" />
-        <Input placeholder="Username" className="rounded-xl" />
-        <Input placeholder="Phone number" className="rounded-xl" />
-        <Input placeholder="Email" className="rounded-xl" />
+        <Input
+          placeholder="Full name"
+          className="rounded-xl"
+          name="fullname"
+          value={formData.profileInfo.fullname}
+          onChange={handleProfileInfoChange}
+        />
+        <Input
+          placeholder="Username"
+          className="rounded-xl"
+          name="username"
+          value={formData.profileInfo.username}
+          onChange={handleProfileInfoChange}
+        />
+        <Input
+          placeholder="Phone number"
+          className="rounded-xl"
+          name="phone_number"
+          value={formData.profileInfo.phone_number}
+          onChange={handleProfileInfoChange}
+        />
+        <Input
+          placeholder="Email"
+          className="rounded-xl"
+          name="email"
+          value={formData.profileInfo.email}
+          onChange={handleProfileInfoChange}
+        />
       </div>
     </div>
   );

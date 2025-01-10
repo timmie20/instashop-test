@@ -64,8 +64,10 @@
   }
 }
 
+html,
 body {
   font-family: var(--dm-sans), Arial, Helvetica, sans-serif;
+  overscroll-behavior: none;
 }
 
 @layer base {

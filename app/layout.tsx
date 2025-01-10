@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
+import { AppContextProvider } from "@/context/AppContext";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -29,7 +30,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${dmSans} antialiased`}>{children}</body>
+      <AppContextProvider>
+        <body className={`${dmSans} antialiased`}>{children}</body>
+      </AppContextProvider>
     </html>
   );
 }

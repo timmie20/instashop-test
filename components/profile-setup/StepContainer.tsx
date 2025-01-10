@@ -1,21 +1,28 @@
 "use client";
 import React from "react";
 import StepOne from "./StepOne";
-import StepTwo from "./StepTwo";
-import StepThree from "./StepThree";
+import BasicInfo from "./BasicInfo";
+import CreateStore from "./CreateStore";
 import Image from "next/image";
 import { Button } from "../ui/button";
+import { useAppContext } from "@/context/AppContext";
 
 const typeToComponentMap: Record<string, React.FC> = {
   1: StepOne,
-  2: StepTwo,
-  3: StepThree,
+  2: BasicInfo,
+  3: CreateStore,
 };
 
 export default function StepContainer() {
   const [step, setStep] = React.useState(1);
+  const { formData } = useAppContext();
 
   const StepComponent = typeToComponentMap[step];
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(formData);
+  };
 
   return (
     <div>
@@ -37,10 +44,10 @@ export default function StepContainer() {
 
       <StepProgressContainer step={step} />
 
-      <form action="">
+      <form onSubmit={handleSubmit}>
         <StepComponent />
 
-        <div className="fixed bottom-2 left-0 w-full border-t bg-white p-4">
+        <footer className="fixed bottom-2 left-0 w-full border-t bg-white p-4">
           <Button
             onClick={() =>
               setStep((prev) =>
@@ -49,11 +56,11 @@ export default function StepContainer() {
             }
             disabled={step === Object.keys(typeToComponentMap).length}
             className="w-full rounded-full"
-            type="button"
+            type="submit"
           >
             Continue
           </Button>
-        </div>
+        </footer>
       </form>
     </div>
   );
@@ -65,7 +72,7 @@ const StepProgressContainer = ({ step }: { step: number }) => {
       {Array.from({ length: 3 }).map((_, i) => (
         <div
           key={i + 1}
-          className={`h-1 flex-1 ${i < step ? "bg-app-primary" : "bg-slate-300"}`}
+          className={`h-1 flex-1 rounded-md ${i < step ? "bg-app-primary" : "bg-slate-300"}`}
         ></div>
       ))}
     </div>

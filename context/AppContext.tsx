@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, createContext, useContext } from "react";
 import { ProfileInfo, ProductDetails } from "@/types";
 
 interface FormDataType {
@@ -10,60 +10,87 @@ interface FormDataType {
 
 interface AppContextProps {
   formData: FormDataType;
-  setFormData?: React.Dispatch<React.SetStateAction<FormDataType>>;
+  setFormData: React.Dispatch<React.SetStateAction<FormDataType>>;
+  handleProfileInfoChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleProductDetailsChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const defaultContext: AppContextProps = {
-  formData: {
-    profileInfo: {
-      email: "",
-      fullname: "",
-      username: "",
-      phone_number: "",
-      store_name: "",
-      store_tag: "",
-      store_number: "",
-      category: "",
-      store_email: "",
-      store_logo: "",
-    },
-    productDetails: {
-      product_title: "",
-      product_desc: "",
-      price: "",
-      old_price: "",
-      product_collection: [""],
-      inventory: "",
-      product_images: [""],
-      self_shipping: false,
-      instashop_shipping: false,
-    },
+// Default values for context
+const defaultFormData: FormDataType = {
+  profileInfo: {
+    email: "",
+    fullname: "",
+    username: "",
+    phone_number: "",
+    store_name: "",
+    store_tag: "",
+    store_number: "",
+    category: "",
+    store_email: "",
+    store_logo: "",
+  },
+  productDetails: {
+    product_title: "",
+    product_desc: "",
+    price: "",
+    old_price: "",
+    product_collection: [""],
+    inventory: "",
+    has_variations: false,
+    variations: [{ type: "", variants: [""] }],
+    product_images: [""],
+    self_shipping: false,
+    instashop_shipping: false,
   },
 };
 
-// Create the AuthContext
-export const AppContext = React.createContext<AppContextProps>(defaultContext);
+const AppContext = createContext<AppContextProps | undefined>(undefined);
 
-// AuthContextProvider component
 export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [formData, setFormData] = useState<FormDataType>(
-    defaultContext.formData,
-  );
+  const [formData, setFormData] = useState<FormDataType>(defaultFormData);
 
-  // Provide the context
+  const handleProfileInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData?.((prev) => ({
+      ...prev,
+      profileInfo: {
+        ...prev.profileInfo,
+        [e.target.name]: e.target.value,
+      },
+    }));
+  };
+
+  const handleProductDetailsChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setFormData?.((prev) => ({
+      ...prev,
+      productDetails: {
+        ...prev.productDetails,
+        [e.target.name]: e.target.value,
+      },
+    }));
+  };
+
   return (
-    <AppContext.Provider value={{ formData, setFormData }}>
+    <AppContext.Provider
+      value={{
+        formData,
+        setFormData,
+        handleProfileInfoChange,
+        handleProductDetailsChange,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );
 };
 
-export const useAppContext = () => {
-  const ctx = React.useContext(AppContext);
-  if (!ctx) {
+export const useAppContext = (): AppContextProps => {
+  const context = useContext(AppContext);
+  if (!context) {
     throw new Error("useAppContext must be used within an AppContextProvider");
   }
-  return ctx;
+  return context;
 };

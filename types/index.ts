@@ -18,6 +18,8 @@ export interface ProductDetails {
   old_price: string;
   product_collection: string[];
   inventory: string;
+  has_variations: boolean;
+  variations: { type: string; variants: string[] }[];
   product_images: string[];
   self_shipping: boolean;
   instashop_shipping: boolean;

@@ -3,7 +3,7 @@ import StepContainer from "@/components/profile-setup/StepContainer";
 
 export const GetStarted = () => {
   return (
-    <div className="p-4 py-6">
+    <div className="px-4 py-6">
       <StepContainer />
     </div>
   );
