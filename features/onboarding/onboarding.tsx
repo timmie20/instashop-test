@@ -24,7 +24,7 @@ export const Onboarding = () => {
 
   return (
     <>
-      <div className="mx-auto flex h-screen w-full max-w-screen-xl flex-col-reverse items-center justify-center px-6 py-4 md:flex-row-reverse md:justify-around md:py-0">
+      <div className="mx-auto flex h-screen w-full max-w-screen-xl flex-col-reverse items-center justify-center px-6 py-4 md:py-0 lg:flex-row-reverse lg:justify-between">
         <div>
           <h1 className="mt-6 text-center text-[36px] font-bold md:text-5xl/normal lg:text-[64px]/normal">
             Welcome
@@ -32,7 +32,7 @@ export const Onboarding = () => {
           <p className="mb-6 text-wrap text-center text-sm md:text-base lg:text-lg">
             The safest platform to shop from social media vendors
           </p>
-          <div className="border-app-primary mb-7 rounded-lg border bg-[#FFEAFA] px-4 py-3">
+          <div className="mb-7 rounded-lg border border-app-primary bg-[#FFEAFA] px-4 py-3">
             <ul className="flex flex-col gap-3">
               {features.map((item) => (
                 <li key={item.id} className="inline-flex items-center gap-2">
@@ -58,13 +58,9 @@ export const Onboarding = () => {
         <div>
           <Image
             src="/assets/images/Shopping Sale.svg"
-            alt="Image of shopping"
+            alt="Responsive sizes example"
             width={550}
-            height={400}
-            style={{
-              maxWidth: "100%",
-              height: "auto",
-            }}
+            height={600}
           />
         </div>
       </div>
