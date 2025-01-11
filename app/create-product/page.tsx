@@ -1,5 +1,5 @@
-import React from "react";
 import { CreateProduct } from "@/features/create-product";
+import React from "react";
 
 export default function page() {
   return <CreateProduct />;

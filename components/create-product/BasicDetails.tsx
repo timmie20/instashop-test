@@ -2,37 +2,77 @@
 import React, { useState, useEffect, useRef, KeyboardEvent } from "react";
 import { Input } from "../ui/input";
 import { useAppContext } from "@/context/AppContext";
-import { Textarea } from "../ui/textarea";
 
 export default function BasicDetails() {
-  const { formData, handleProductDetailsChange } = useAppContext() || {};
+  const { formData, setFormData, handleProductDetailsChange } =
+    useAppContext() || {};
 
-  const [email, setEmail] = useState("");
-  const [emails, setEmails] = useState<{ id: number; email: string }[]>([]);
-  const emailInputRef = useRef<HTMLInputElement>(null);
+  const [collection, setCollection] = useState("");
+  const [collections, setCollections] = useState<
+    { id: number; label: string }[]
+  >([]);
+  const collectionInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Enter") {
-        setEmails((prev) => [...prev, { id: prev.length + 1, email }]);
-        setEmail("");
+        if (
+          collection &&
+          !collections.some((col) => col.label === collection)
+        ) {
+          const newCollection = {
+            id: collections.length + 1,
+            label: collection,
+          };
+          setCollections((prev) => [...prev, newCollection]);
+
+          // Update the formData with new collection
+          if (formData?.productDetails?.product_collection) {
+            const updatedCollection = [
+              ...formData.productDetails.product_collection,
+              newCollection.label,
+            ];
+            setFormData({
+              ...formData,
+              productDetails: {
+                ...formData.productDetails,
+                product_collection: updatedCollection,
+              },
+            });
+          }
+          setCollection(""); // Clear input
+        }
         e.preventDefault();
       }
     };
 
-    const currentEmailInput = emailInputRef.current;
+    const currentEmailInput = collectionInputRef.current;
     const keyDownHandler = (e: Event) =>
       handleKeyDown(e as unknown as KeyboardEvent);
     currentEmailInput?.addEventListener("keydown", keyDownHandler);
+
     return () =>
       currentEmailInput?.removeEventListener("keydown", keyDownHandler);
-  }, [email]);
+  }, [collection, collections, formData, setFormData]);
 
   const handleRemoveEmail = (id: number) => {
-    if (!emails) {
-      return;
-    } else {
-      setEmails(emails.filter((email) => email.id !== id));
+    setCollections((prev) => prev.filter((collection) => collection.id !== id));
+
+    // Remove the collection from formData as well
+    if (formData?.productDetails?.product_collection) {
+      const updatedCollection =
+        formData.productDetails.product_collection.filter(
+          (col) =>
+            col !==
+            collections.find((collection) => collection.id === id)?.label,
+        );
+      setFormData({
+        ...formData,
+        productDetails: {
+          ...formData.productDetails,
+          product_collection: updatedCollection,
+        },
+      });
     }
   };
 
@@ -42,14 +82,22 @@ export default function BasicDetails() {
         <h2 className="text-sm font-medium">Basic details</h2>
         <div className="mt-2 space-y-4">
           <Input
-            name="price"
-            value={formData?.productDetails?.price || ""}
+            name="product_title"
+            value={formData?.productDetails?.product_title || ""}
             onChange={handleProductDetailsChange}
             type="text"
             placeholder="Product Title"
             className="w-full"
           />
-          <Textarea placeholder="Product Description" className="resize-none" />
+
+          <Input
+            name="product_desc"
+            placeholder="Product Description"
+            className="min-h-[68px] resize-none overflow-scroll"
+            value={formData.productDetails.product_desc}
+            onChange={handleProductDetailsChange}
+          />
+
           <div className="flex space-x-4">
             <Input
               name="price"
@@ -71,12 +119,12 @@ export default function BasicDetails() {
           <div className="max-h-[100px] min-h-[68px] overflow-scroll rounded-xl border px-4 py-2">
             <span className="text-muted-foreground">Product collection</span>
             <div className="flex flex-wrap items-center gap-1">
-              {emails?.map((email, i) => (
+              {collections?.map((collection, i) => (
                 <span
                   key={i}
                   className="flex w-fit items-center gap-2 rounded-full bg-zinc-100 px-2 py-[2px] text-xs"
                 >
-                  {email.email}
+                  {collection.label}
 
                   <svg
                     width="8"
@@ -84,7 +132,7 @@ export default function BasicDetails() {
                     viewBox="0 0 10 10"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    onClick={() => handleRemoveEmail(email.id)}
+                    onClick={() => handleRemoveEmail(collection.id)}
                     className="cursor-pointer"
                   >
                     <path
@@ -97,13 +145,13 @@ export default function BasicDetails() {
             </div>
             <input
               autoComplete="false"
-              ref={emailInputRef}
+              ref={collectionInputRef}
               id="emailInput"
               type="email"
               placeholder="Search or create collection"
               className="w-full rounded-xl border-none bg-transparent text-sm font-medium placeholder:text-xs focus:border-none focus:shadow-none focus:outline-none"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={collection}
+              onChange={(e) => setCollection(e.target.value)}
             />
           </div>
           <Input

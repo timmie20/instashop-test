@@ -6,6 +6,7 @@ import CreateStore from "./CreateStore";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { useAppContext } from "@/context/AppContext";
+import { useRouter } from "next/navigation";
 
 const typeToComponentMap: Record<string, React.FC> = {
   1: StepOne,
@@ -16,12 +17,23 @@ const typeToComponentMap: Record<string, React.FC> = {
 export default function StepContainer() {
   const [step, setStep] = React.useState(1);
   const { formData } = useAppContext();
+  const router = useRouter();
 
   const StepComponent = typeToComponentMap[step];
+
+  const handleNext = () => {
+    if (step >= 3) {
+      router.push("/create-product");
+    }
+    setStep((prev) =>
+      Math.min(prev + 1, Object.keys(typeToComponentMap).length),
+    );
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log(formData);
+    alert("hello");
   };
 
   return (
@@ -49,14 +61,9 @@ export default function StepContainer() {
 
         <footer className="fixed bottom-2 left-0 w-full border-t bg-white p-4">
           <Button
-            onClick={() =>
-              setStep((prev) =>
-                Math.min(prev + 1, Object.keys(typeToComponentMap).length),
-              )
-            }
-            disabled={step === Object.keys(typeToComponentMap).length}
+            onClick={handleNext}
             className="w-full rounded-full"
-            type="submit"
+            type="button"
           >
             Continue
           </Button>

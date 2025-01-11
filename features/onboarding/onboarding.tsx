@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export const Onboarding = () => {
   const features = [
@@ -50,9 +51,11 @@ export const Onboarding = () => {
             </ul>
           </div>
 
-          <Button size="lg" className="mt-14 w-full rounded-full">
-            Get started
-          </Button>
+          <Link href="/get-started">
+            <Button size="lg" className="mt-14 w-full rounded-full">
+              Get started
+            </Button>
+          </Link>
         </div>
 
         <div>

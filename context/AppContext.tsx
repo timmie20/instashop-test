@@ -34,7 +34,7 @@ const defaultFormData: FormDataType = {
     product_desc: "",
     price: "",
     old_price: "",
-    product_collection: [""],
+    product_collection: [],
     inventory: "",
     has_variations: false,
     variations: [{ type: "", variants: [""] }],

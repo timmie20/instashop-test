@@ -5,6 +5,7 @@ import ProductImages from "@/components/create-product/ProductImages";
 import InventoryVariations from "@/components/create-product/InventoryVariations";
 import { Button } from "@/components/ui/button";
 import Shipping from "@/components/create-product/Shipping";
+import Link from "next/link";
 
 export const CreateProduct = () => {
   return (
@@ -24,7 +25,10 @@ export const CreateProduct = () => {
         <Button className="w-full rounded-full border border-app-primary bg-transparent text-black hover:bg-transparent">
           Cancel
         </Button>
-        <Button className="w-full rounded-full">Save</Button>
+
+        <Link href="/product-preview" className="w-full">
+          <Button className="w-full rounded-full">Save</Button>
+        </Link>
       </footer>
     </>
   );

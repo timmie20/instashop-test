@@ -152,8 +152,6 @@ export default function InventoryVariations() {
         <span className="text-2xl">+</span>
         <span className="text-app-primary">Add new option</span>
       </button>
-
-      <button onClick={() => console.log(formData)}>submit</button>
     </div>
   );
 }
