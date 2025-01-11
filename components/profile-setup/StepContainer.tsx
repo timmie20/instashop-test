@@ -37,38 +37,43 @@ export default function StepContainer() {
   };
 
   return (
-    <div>
-      <header className="flex items-center gap-2">
-        <button
-          onClick={() => setStep((prev) => Math.max(prev - 1, 1))}
-          disabled={step === 1}
-        >
-          <Image
-            src="/assets/icons/arrow_back.svg"
-            alt="arrow back"
-            width={20}
-            height={20}
-          />{" "}
-        </button>
-
-        <span className="text-base font-medium">Get Started</span>
+    <div className="flex h-screen w-full flex-col md:mx-auto md:max-w-screen-lg">
+      {/* Header */}
+      <header className="sticky top-0 z-10 bg-white py-4 shadow-sm">
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setStep((prev) => Math.max(prev - 1, 1))}
+            disabled={step === 1}
+          >
+            <Image
+              src="/assets/icons/arrow_back.svg"
+              alt="arrow back"
+              width={20}
+              height={20}
+            />
+          </button>
+          <span className="text-base font-medium">Get Started</span>
+        </div>
       </header>
 
+      {/* Step Progress Container */}
       <StepProgressContainer step={step} />
 
-      <form onSubmit={handleSubmit}>
+      {/* Main Content */}
+      <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto">
         <StepComponent />
-
-        <footer className="fixed bottom-2 left-0 w-full border-t bg-white p-4">
-          <Button
-            onClick={handleNext}
-            className="w-full rounded-full"
-            type="button"
-          >
-            Continue
-          </Button>
-        </footer>
       </form>
+
+      {/* Footer */}
+      <footer className="sticky bottom-0 z-10 border-t bg-white p-4">
+        <Button
+          onClick={handleNext}
+          className="w-full rounded-full"
+          type="button"
+        >
+          Continue
+        </Button>
+      </footer>
     </div>
   );
 }

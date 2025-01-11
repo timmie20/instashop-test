@@ -191,7 +191,7 @@ const VariationBlock: React.FC<VariationBlockProps> = ({
         <input
           type="text"
           placeholder="E.g Size"
-          className="w-full rounded-xl border-none bg-transparent text-sm font-medium placeholder:text-xs focus:outline-none"
+          className="w-full rounded-xl border-none bg-transparent text-sm font-medium placeholder:text-xs focus:outline-none md:text-base md:placeholder:text-base"
           value={block.variantType}
           onChange={(e) =>
             onUpdateBlock(block.id, { variantType: e.target.value })
@@ -199,7 +199,7 @@ const VariationBlock: React.FC<VariationBlockProps> = ({
         />
         <button
           onClick={() => onRemoveBlock(block.id)}
-          className="ml-2 text-base text-red-500"
+          className="ml-2 text-base text-red-500 md:text-xl"
         >
           x
         </button>
@@ -209,7 +209,7 @@ const VariationBlock: React.FC<VariationBlockProps> = ({
         {block.variants.map((variant) => (
           <span
             key={variant.id}
-            className="flex w-fit items-center gap-2 rounded-full bg-zinc-100 px-2 py-[2px] text-xs"
+            className="flex w-fit items-center gap-2 rounded-full bg-zinc-100 px-2 py-[2px] text-xs md:text-base"
           >
             {variant.label}
             <svg
@@ -238,7 +238,7 @@ const VariationBlock: React.FC<VariationBlockProps> = ({
         ref={variantInputRef}
         type="text"
         placeholder="Add a variant"
-        className="w-full rounded-xl border-none bg-transparent text-sm font-medium placeholder:text-xs focus:outline-none"
+        className="w-full rounded-xl border-none bg-transparent text-sm font-medium placeholder:text-xs focus:outline-none md:text-base md:placeholder:text-base"
         value={variant}
         onChange={(e) => setVariant(e.target.value)}
       />

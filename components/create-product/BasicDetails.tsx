@@ -122,7 +122,7 @@ export default function BasicDetails() {
               {collections?.map((collection, i) => (
                 <span
                   key={i}
-                  className="flex w-fit items-center gap-2 rounded-full bg-zinc-100 px-2 py-[2px] text-xs"
+                  className="flex w-fit items-center gap-2 rounded-full bg-zinc-100 px-2 py-[2px] text-xs md:text-base"
                 >
                   {collection.label}
 
@@ -149,7 +149,7 @@ export default function BasicDetails() {
               id="emailInput"
               type="email"
               placeholder="Search or create collection"
-              className="w-full rounded-xl border-none bg-transparent text-sm font-medium placeholder:text-xs focus:border-none focus:shadow-none focus:outline-none"
+              className="w-full rounded-xl border-none bg-transparent text-sm font-medium placeholder:text-xs focus:border-none focus:shadow-none focus:outline-none md:text-base md:placeholder:text-base"
               value={collection}
               onChange={(e) => setCollection(e.target.value)}
             />

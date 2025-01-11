@@ -1,22 +1,27 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useAppContext } from "@/context/AppContext";
 
 export const Preview = () => {
+  const { formData } = useAppContext();
   return (
     <div className="mx-auto max-w-screen-lg">
       <header className="sticky top-0 z-10 h-fit bg-white px-4 pb-2 pt-6">
         <div className="flex items-center justify-between">
-          <button className="flex items-center gap-2">
-            <Image
-              src="/assets/icons/arrow_back.svg"
-              alt="arrow back"
-              width={20}
-              height={20}
-            />{" "}
-            <span className="text-base font-medium">Preview product</span>
-          </button>
+          <Link href="/create-product">
+            <button className="flex items-center gap-2">
+              <Image
+                src="/assets/icons/arrow_back.svg"
+                alt="arrow back"
+                width={20}
+                height={20}
+              />{" "}
+              <span className="text-base font-medium">Preview product</span>
+            </button>
+          </Link>
 
           <Image
             src="/assets/icons/more_vert.svg"
@@ -39,8 +44,11 @@ export const Preview = () => {
         <div className="mt-4 border-b px-4 pb-3">
           <div className="flex items-center justify-between">
             <h3 className="text-wrap text-sm font-medium md:text-2xl">
-              Gucci bag – the epitome of luxury and sophistication
+              {formData.productDetails.product_title?.trim()
+                ? formData.productDetails.product_title
+                : "Gucci bag – the epitome of luxury and sophistication"}
             </h3>
+
             <div className="flex items-center gap-2">
               <span className="flex size-9 items-center justify-center rounded-full bg-zinc-200">
                 <Image
@@ -63,8 +71,24 @@ export const Preview = () => {
 
           <div className="mt-2 flex items-center justify-between">
             <div className="flex items-center gap-[6px]">
-              <h2 className="text-xl md:text-2xl">₦18.0</h2>
-              <span className="text-xs text-slate-500 md:text-sm">₦28.0</span>
+              <h2 className="text-xl md:text-2xl">
+                {`
+                ₦
+                ${
+                  formData.productDetails.price?.trim()
+                    ? formData.productDetails.price
+                    : "18.0"
+                } `}
+              </h2>
+              <span className="text-xs text-slate-500 md:text-sm">
+                {`
+                ₦
+                ${
+                  formData.productDetails.old_price?.trim()
+                    ? formData.productDetails.old_price
+                    : "25.0"
+                } `}
+              </span>
               <span className="rounded-full bg-app-primary px-1 py-[2px] text-xs text-white md:text-sm">
                 25% OFF
               </span>
@@ -124,10 +148,9 @@ export const Preview = () => {
           </div>
 
           <h4 className="text-wrap text-xs md:text-base">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur
-            nihil maxime consequatur fugiat, et repellat animi ea delectus
-            eveniet aspernatur eaque veritatis nam provident sit saepe, ratione
-            quos repellendus excepturi.
+            {formData.productDetails.product_desc?.trim()
+              ? formData.productDetails.product_desc
+              : "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur nihil maxime consequatur fugiat, et repellat animi ea delectus eveniet aspernatur eaque veritatis nam provident sit saepe, ratione quos repellendus excepturi"}
           </h4>
 
           <span className="text-xs font-medium text-app-primary">
@@ -161,7 +184,9 @@ export const Preview = () => {
             <div className="flex w-full items-center justify-between">
               <div>
                 <span className="text-xs font-medium md:text-base">
-                  Gucci Store
+                  {formData.profileInfo.store_name?.trim()
+                    ? formData.profileInfo.store_name
+                    : "Gucci store"}
                 </span>
                 <div className="flex items-center gap-3">
                   <span className="text-sm text-slate-500">Fashion</span>
@@ -206,7 +231,7 @@ export const Preview = () => {
       </div>
 
       <footer className="sticky bottom-0 left-0 flex w-full items-center gap-4 border-t bg-white p-4 pb-6">
-        <Link href="#" className="w-full">
+        <Link href="/" className="w-full">
           <Button className="w-full rounded-full">Publish</Button>
         </Link>
       </footer>

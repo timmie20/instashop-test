@@ -7,7 +7,7 @@ export default function CreateStore() {
   const { formData, handleProfileInfoChange } = useAppContext() || {};
   return (
     <div className="mt-4">
-      <div className="flex h-[140px] w-full items-center justify-center rounded-xl border">
+      <div className="flex h-[140px] w-full flex-col items-center justify-center rounded-xl border">
         <div className="relative flex size-20 items-center justify-center">
           <Image
             src="/assets/images/test.webp"
@@ -28,6 +28,7 @@ export default function CreateStore() {
             }}
           />
         </div>
+        <span className="mt-1">Upload store logo</span>
       </div>
       <div className="mt-4 space-y-4">
         <Input
