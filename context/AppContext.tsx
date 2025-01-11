@@ -38,7 +38,7 @@ const defaultFormData: FormDataType = {
     inventory: "",
     has_variations: false,
     variations: [{ type: "", variants: [""] }],
-    product_images: [""],
+    product_images: [],
     self_shipping: false,
     instashop_shipping: false,
   },

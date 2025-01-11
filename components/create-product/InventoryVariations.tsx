@@ -87,21 +87,24 @@ export default function InventoryVariations() {
         </span>
       </div>
 
-      {formData.productDetails.has_variations &&
-        variantBlocks.map((block) => (
-          <VariationBlock
-            key={block.id}
-            block={block}
-            onUpdateBlock={handleUpdateBlock}
-            onRemoveBlock={handleRemoveBlock}
-          />
-        ))}
+      <div className="mt-3 space-y-3">
+        {formData.productDetails.has_variations &&
+          variantBlocks.map((block) => (
+            <VariationBlock
+              key={block.id}
+              block={block}
+              onUpdateBlock={handleUpdateBlock}
+              onRemoveBlock={handleRemoveBlock}
+            />
+          ))}
+      </div>
 
       <button
+        className="mt-2 flex w-full items-center justify-center gap-2 rounded-full bg-zinc-100 p-4 text-app-primary"
         onClick={handleAddBlock}
-        className="mt-4 rounded-lg bg-blue-500 px-4 py-2 text-white"
       >
-        Add Variation Block
+        <span className="text-2xl">+</span>
+        <span className="text-app-primary">Add new option</span>
       </button>
     </div>
   );

@@ -20,7 +20,7 @@ export interface ProductDetails {
   inventory: string;
   has_variations: boolean;
   variations: { type: string; variants: string[] }[];
-  product_images: string[];
+  product_images: File[];
   self_shipping: boolean;
   instashop_shipping: boolean;
 }
