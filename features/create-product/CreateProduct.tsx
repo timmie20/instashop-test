@@ -21,7 +21,7 @@ export const CreateProduct = () => {
         <Shipping />
       </div>
 
-      <footer className="sticky bottom-0 left-0 flex w-full items-center gap-4 border-t bg-white p-4">
+      <footer className="sticky bottom-0 left-0 flex w-full items-center gap-4 border-t bg-white p-4 pb-6">
         <Button className="w-full rounded-full border border-app-primary bg-transparent text-black hover:bg-transparent">
           Cancel
         </Button>
