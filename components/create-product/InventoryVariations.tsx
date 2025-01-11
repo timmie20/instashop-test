@@ -36,18 +36,48 @@ export default function InventoryVariations() {
   >([]);
 
   const handleAddBlock = () => {
-    setVariantBlocks((prev) => [
-      ...prev,
-      {
+    setVariantBlocks((prev) => {
+      const newBlock = {
         id: Math.floor(Math.random() * 1000), // Generate a unique ID
         variantType: "",
         variants: [],
-      },
-    ]);
+      };
+      const updatedBlocks = [...prev, newBlock];
+
+      // Update form data
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        productDetails: {
+          ...prevFormData.productDetails,
+          variations: updatedBlocks.map((block) => ({
+            type: block.variantType,
+            variants: block.variants.map((v) => v.label),
+          })),
+        },
+      }));
+
+      return updatedBlocks;
+    });
   };
 
   const handleRemoveBlock = (id: number) => {
-    setVariantBlocks((prev) => prev.filter((block) => block.id !== id));
+    setVariantBlocks((prev) => {
+      const updatedBlocks = prev.filter((block) => block.id !== id);
+
+      // Update form data
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        productDetails: {
+          ...prevFormData.productDetails,
+          variations: updatedBlocks.map((block) => ({
+            type: block.variantType,
+            variants: block.variants.map((v) => v.label),
+          })),
+        },
+      }));
+
+      return updatedBlocks;
+    });
   };
 
   const handleUpdateBlock = (
@@ -57,9 +87,25 @@ export default function InventoryVariations() {
       variants: Variant[];
     }>,
   ) => {
-    setVariantBlocks((prev) =>
-      prev.map((block) => (block.id === id ? { ...block, ...data } : block)),
-    );
+    setVariantBlocks((prev) => {
+      const updatedBlocks = prev.map((block) =>
+        block.id === id ? { ...block, ...data } : block,
+      );
+
+      // Update form data
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        productDetails: {
+          ...prevFormData.productDetails,
+          variations: updatedBlocks.map((block) => ({
+            type: block.variantType,
+            variants: block.variants.map((v) => v.label),
+          })),
+        },
+      }));
+
+      return updatedBlocks;
+    });
   };
 
   const handleToggle = (checked: CheckedState) => {
@@ -106,6 +152,8 @@ export default function InventoryVariations() {
         <span className="text-2xl">+</span>
         <span className="text-app-primary">Add new option</span>
       </button>
+
+      <button onClick={() => console.log(formData)}>submit</button>
     </div>
   );
 }
